@@ -35,3 +35,11 @@ server:
 
 gateway:
   ip: ${GATEWAY_IP}
+
+token:
+  expiration_time: 3600
+  secret: "890qw374ghvipujrahfv9piu8wq34hf98734rf897hjviupjrfgeirhugfaipuoshiperubniaergpubn"
+
+login:
+  url:
+    path: "/users/login"
