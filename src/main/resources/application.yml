@@ -2,9 +2,22 @@ spring:
   application:
     name: users-ws
 
+  config:
+    import: optional:configserver:http://localhost:8088
+
+  rabbitmq:
+    username: user
+    password: password
+
   devtools:
     restart:
       enabled: true
+
+  cloud:
+    bus:
+      enabled: true
+      refresh:
+        enabled: true
 
   h2:
     console:
