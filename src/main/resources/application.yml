@@ -1,9 +1,9 @@
 spring:
   application:
-    name: users-ws
+    name: usersws
 
   config:
-    import: optional:configserver:http://localhost:8088
+    import: optional:configserver:http://localhost:8888
 
   rabbitmq:
     username: user
@@ -14,9 +14,8 @@ spring:
       enabled: true
 
   cloud:
-
     config:
-      uri: https://localhost:8082
+      uri: https://localhost:8888
       username: client
       password: 123456
 
@@ -31,14 +30,15 @@ spring:
       enabled: true
       settings.web-allow-others: true
 
-  datasource:
-    urL: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/photo_app?createDatabaseIfNotExist=true
+#    username: root
+#    password: peanutbutter
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 eureka:
   client:
