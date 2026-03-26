@@ -5,6 +5,7 @@ import com.dimitarrradev.photoapp.api.users.model.UserDto;
 import com.dimitarrradev.photoapp.api.users.model.CreateUserResponseModel;
 import com.dimitarrradev.photoapp.api.users.service.UsersService;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.QueryParam;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,11 @@ public class UsersController {
         CreateUserResponseModel body = mapper.map(userDto, CreateUserResponseModel.class);
 
         return ResponseEntity.created(null).body(body);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<UserDto> getUserDetails(@RequestParam String username) {
+        return ResponseEntity.ok(usersService.getUserDetails(username));
     }
 
 }

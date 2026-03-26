@@ -22,7 +22,7 @@ spring:
       settings.web-allow-others: true
 
 #  datasource:
-#    url: jdbc:mysql://localhost:3306/photo_app?createDatabaseIfNotExist=true
+#    url: jdbc:mysql://localhost:3306/photo_app_users?createDatabaseIfNotExist=true
 #    username: root
 #    password: peanutbutter
 
@@ -43,9 +43,3 @@ eureka:
 server:
   port: ${PORT:0}
 
-gateway:
-  ip: ${GATEWAY_IP}
-
-login:
-  url:
-    path: "/users/login"

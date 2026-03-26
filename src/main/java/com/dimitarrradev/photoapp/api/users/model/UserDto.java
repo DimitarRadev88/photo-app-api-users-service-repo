@@ -13,11 +13,12 @@ public class UserDto implements Serializable {
     private String userId;
     private String password;
     private String encryptedPassword;
+    private AlbumDto albumDto;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String userId, String password, String encryptedPassword) {
+    public UserDto(Long id, String firstName, String lastName, String email, String userId, String password, String encryptedPassword, AlbumDto albumDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +26,7 @@ public class UserDto implements Serializable {
         this.userId = userId;
         this.password = password;
         this.encryptedPassword = encryptedPassword;
+        this.albumDto = albumDto;
     }
 
     public Long getId() {
@@ -83,5 +85,11 @@ public class UserDto implements Serializable {
         this.encryptedPassword = encryptedPassword;
     }
 
+    public AlbumDto getAlbumDto() {
+        return albumDto;
+    }
 
+    public void setAlbumDto(AlbumDto albumDto) {
+        this.albumDto = albumDto;
+    }
 }

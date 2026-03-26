@@ -57,6 +57,8 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(HttpMethod.GET, "/users/status/check").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/actuator/**")
                         .access(new WebExpressionAuthorizationManager(String.format("hasIpAddress('%s')", ipAddress)))
                         .requestMatchers(HttpMethod.POST, "/users")
