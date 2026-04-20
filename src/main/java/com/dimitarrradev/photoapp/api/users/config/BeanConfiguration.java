@@ -1,5 +1,6 @@
 package com.dimitarrradev.photoapp.api.users.config;
 
+import feign.Logger;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
@@ -28,6 +29,16 @@ public class BeanConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
+
+    @Bean
+    public FeignErrorDecoder feignErrorDecoder() {
+        return new FeignErrorDecoder();
     }
 
 }

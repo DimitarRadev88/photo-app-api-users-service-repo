@@ -1,6 +1,7 @@
 package com.dimitarrradev.photoapp.api.users.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserDto implements Serializable {
 
@@ -13,12 +14,12 @@ public class UserDto implements Serializable {
     private String userId;
     private String password;
     private String encryptedPassword;
-    private AlbumDto albumDto;
+    private List<AlbumDto> albumDtos;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String userId, String password, String encryptedPassword, AlbumDto albumDto) {
+    public UserDto(Long id, String firstName, String lastName, String email, String userId, String password, String encryptedPassword, List<AlbumDto> albumDtos) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,7 +27,7 @@ public class UserDto implements Serializable {
         this.userId = userId;
         this.password = password;
         this.encryptedPassword = encryptedPassword;
-        this.albumDto = albumDto;
+        this.albumDtos = albumDtos;
     }
 
     public Long getId() {
@@ -85,11 +86,11 @@ public class UserDto implements Serializable {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public AlbumDto getAlbumDto() {
-        return albumDto;
+    public List<AlbumDto> getAlbumDtos() {
+        return albumDtos;
     }
 
-    public void setAlbumDto(AlbumDto albumDto) {
-        this.albumDto = albumDto;
+    public void setAlbumDto(List<AlbumDto> albumDtos) {
+        this.albumDtos = albumDtos;
     }
 }

@@ -1,19 +1,18 @@
 package com.dimitarrradev.photoapp.api.users.service;
 
+import com.dimitarrradev.photoapp.api.users.config.AlbumsServiceClient;
 import com.dimitarrradev.photoapp.api.users.dao.UsersRepository;
-import com.dimitarrradev.photoapp.api.users.model.AlbumDto;
 import com.dimitarrradev.photoapp.api.users.model.UserDto;
 import com.dimitarrradev.photoapp.api.users.model.UserEntity;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -24,14 +23,24 @@ public class UsersService implements UserDetailsService {
     private final UsersRepository usersRepository;
     private final ModelMapper mapper;
     private final PasswordEncoder passwordEncoder;
-    private final RestClient restClient;
+//    private final RestClient restClient;
+    private final AlbumsServiceClient albumsClient;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public UsersService(UsersRepository usersRepository, ModelMapper mapper, PasswordEncoder passwordEncoder, @Qualifier("loadBalancedClient") RestClient restClient) {
+    public UsersService(
+            UsersRepository usersRepository, 
+            ModelMapper mapper, 
+            PasswordEncoder passwordEncoder, 
+//            @Qualifier("loadBalancedClient") RestClient restClient
+            AlbumsServiceClient albumsClient
+    ) {
         this.usersRepository = usersRepository;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
-        this.restClient = restClient;
+//        this.restClient = restClient;
+        this.albumsClient = albumsClient;
     }
+    
 
     public UserDto create(UserDto userDetails) {
 
@@ -68,8 +77,10 @@ public class UsersService implements UserDetailsService {
 
         UserDto map = mapper.map(userEntity, UserDto.class);
 
-        map.setAlbumDto(restClient.get().uri("users/{userId}/albums/", userEntity.getUserId()).accept(MediaType.APPLICATION_JSON).retrieve().body(AlbumDto.class));
+//        map.setAlbumDto(restClient.get().uri("users/{userId}/albums", userEntity.getUserId()).accept(MediaType.APPLICATION_JSON).retrieve().body(AlbumResponseModel.class));
 
+        map.setAlbumDto(albumsClient.getAlbums(map.getUserId()));
+        
         return map;
     }
 }

@@ -43,3 +43,13 @@ eureka:
 server:
   port: ${PORT:0}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings
+
+logging:
+  level:
+    com.dimitarrradev.photoapp.api.users.config.AlbumsServiceClient: "debug"
+
