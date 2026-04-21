@@ -1,4 +1,4 @@
-package com.dimitarrradev.photoapp.api.users.config;
+package com.dimitarrradev.photoapp.api.users.error;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;
