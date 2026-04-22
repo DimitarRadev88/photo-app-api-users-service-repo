@@ -59,12 +59,26 @@ logging:
     com.dimitarrradev.photoapp.api.users.config.AlbumsServiceClient: "debug"
 
 resilence4j.circuitbreaker:
-    instances:
-      albums-ws:
-        failureRateThreshold: 50
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 10s
-        slidingWindowType: COUNT_BASED
-        slidingWindowSize: 2
-        minimumNumberOfCalls: 1
-        eventConsumerBufferSize: 10
+  instances:
+    albums-ws:
+      failureRateThreshold: 50
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 10s
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 2
+      minimumNumberOfCalls: 1
+      eventConsumerBufferSize: 10
+
+resilience4j.retry:
+  instances:
+    albums-ws:
+      maxAttempts: 3
+      waitDuration: 2s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 5
+
+resilience4j:
+  circuitbreaker:
+    circuitBreakerAspectOrder: 1
+  retry:
+    retryAspectOrder: 2
