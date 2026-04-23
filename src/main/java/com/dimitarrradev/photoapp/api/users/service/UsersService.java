@@ -2,6 +2,7 @@ package com.dimitarrradev.photoapp.api.users.service;
 
 import com.dimitarrradev.photoapp.api.users.config.AlbumsServiceClient;
 import com.dimitarrradev.photoapp.api.users.dao.UsersRepository;
+import com.dimitarrradev.photoapp.api.users.model.AlbumDto;
 import com.dimitarrradev.photoapp.api.users.model.UserDto;
 import com.dimitarrradev.photoapp.api.users.model.UserEntity;
 import org.modelmapper.ModelMapper;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -69,17 +71,29 @@ public class UsersService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public UserDto getUserDetails(String username) {
+    public UserDto getUserDetailsByEmail(String email) {
+        UserEntity userEntity = usersRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email));
+
+        return mapper.map(userEntity, UserDto.class);
+    }
+
+    public UserDto getUser(String userId) {
 
         UserEntity userEntity = usersRepository
-                .findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+                .findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException(userId));
 
         UserDto map = mapper.map(userEntity, UserDto.class);
 
 //        map.setAlbumDto(restClient.get().uri("users/{userId}/albums", userEntity.getUserId()).accept(MediaType.APPLICATION_JSON).retrieve().body(AlbumResponseModel.class));
 
-        map.setAlbumDto(albumsClient.getAlbums(map.getUserId()));
+        logger.debug("Before calling albums microservice");
+        List<AlbumDto> albums = albumsClient.getAlbums(map.getUserId());
+        logger.debug("After calling albums microservice");
+
+        map.setAlbumDto(albums);
         
         return map;
     }

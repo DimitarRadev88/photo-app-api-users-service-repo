@@ -63,7 +63,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String username = user.getUsername();
 
-        UserDto userDetails = usersService.getUserDetails(username);
+        UserDto userDetails = usersService.getUserDetailsByEmail(username);
 
         Instant now = Instant.now();
 

@@ -54,9 +54,17 @@ management:
       circuitbreakers:
         enabled: true
 
+  tracing:
+    sampling:
+      probability: 1.0
+
 logging:
   level:
     com.dimitarrradev.photoapp.api.users.config.AlbumsServiceClient: "debug"
+    com.dimitarrradev.photoapp.api.users.service.UsersService: "debug"
+  pattern:
+    correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
+  include-application-name: false
 
 resilence4j.circuitbreaker:
   instances:

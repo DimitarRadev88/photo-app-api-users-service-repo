@@ -38,9 +38,9 @@ public class UsersController {
         return ResponseEntity.created(null).body(body);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<UserDto> getUserDetails(@RequestParam String username) {
-        return ResponseEntity.ok(usersService.getUserDetails(username));
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUserDetails(@PathVariable String userId) {
+        return ResponseEntity.ok(usersService.getUser(userId));
     }
 
 }
